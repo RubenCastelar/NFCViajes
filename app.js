@@ -304,9 +304,18 @@ function renderTripView(trip) {
   }
 
   title.textContent = trip.name;
-  description.textContent = trip.description || "";
+  if (trip.description) {
+    description.textContent = trip.description;
+    description.classList.remove("hidden");
+  } else {
+    description.textContent = "";
+    description.classList.add("hidden");
+  }
+
   count.textContent = "";
+  count.classList.add("hidden");
   route.textContent = "";
+  route.classList.add("hidden");
 
   copyButton.addEventListener("click", async () => {
     const url = `${location.origin}${location.pathname}#trip/${trip.slug}`;
