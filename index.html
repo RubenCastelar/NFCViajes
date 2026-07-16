@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuerdos NFC</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div class="hero__copy">
+          <p class="eyebrow">Tus viajes</p>
+          <h1>Convierte cada lugar en una galería viva.</h1>
+          <p id="sync-status" class="hero__status"></p>
+        </div>
+
+        <div class="hero__actions">
+          <button class="secondary-button hidden" id="migrate-local-data" type="button">
+            Subir viajes actuales
+          </button>
+          <button class="secondary-button hidden" id="refresh-trips" type="button">
+            Recargar nube
+          </button>
+          <button class="primary-button" id="open-create-modal" type="button">
+            Nuevo viaje
+          </button>
+        </div>
+      </header>
+
+      <section class="top-preview">
+        <div class="top-preview__header">
+          <div>
+            <p class="toolbar__label">Tus destinos</p>
+          </div>
+          <span class="top-preview__hint">Toca un viaje para entrar</span>
+        </div>
+        <div id="top-preview-rail" class="top-preview__rail" aria-live="polite"></div>
+      </section>
+
+      <main class="content">
+        <section id="empty-state" class="empty-state hidden">
+          <p class="empty-state__title">Todavía no hay viajes guardados.</p>
+          <p class="empty-state__text">
+            Crea tu primer álbum y añade fotos para empezar a enlazarlo con tus
+            stickers NFC.
+          </p>
+        </section>
+
+        <section id="trip-view" class="trip-view hidden" aria-live="polite"></section>
+      </main>
+    </div>
+
+    <dialog id="trip-modal" class="modal">
+      <form class="modal__card" id="trip-form">
+        <div class="modal__header">
+          <div>
+            <p class="eyebrow">Nuevo destino</p>
+            <h3>Crea una galería de viaje</h3>
+          </div>
+          <button class="icon-button" id="close-modal" type="button" aria-label="Cerrar">
+            ×
+          </button>
+        </div>
+
+        <label class="field">
+          <span>Nombre del viaje</span>
+          <input id="trip-name" name="name" type="text" maxlength="60" required />
+        </label>
+
+        <label class="field">
+          <span>Descripción breve</span>
+          <textarea
+            id="trip-description"
+            name="description"
+            rows="3"
+            maxlength="180"
+            placeholder="Calles, comida, paisajes, recuerdos..."
+          ></textarea>
+        </label>
+
+        <label class="field">
+          <span>Fotos del viaje</span>
+          <input
+            id="trip-images"
+            name="images"
+            type="file"
+            accept="image/*,.heic,.heif,image/heic,image/heif"
+            multiple
+          />
+          <small class="field__hint">Opcional. Puedes crear el viaje ahora y subir fotos después.</small>
+        </label>
+
+        <div id="preview-grid" class="preview-grid"></div>
+
+        <button class="primary-button primary-button--full" type="submit">
+          Guardar viaje
+        </button>
+      </form>
+    </dialog>
+
+    <template id="preview-card-template">
+      <button class="preview-card" type="button">
+        <div class="preview-card__media">
+          <img class="preview-card__image" alt="" />
+          <span class="preview-card__placeholder hidden">Sin fotos</span>
+          <span class="preview-card__name"></span>
+        </div>
+      </button>
+    </template>
+
+    <template id="gallery-template">
+      <section class="gallery">
+        <button class="back-link" type="button">← Volver al feed</button>
+        <div class="gallery__hero">
+          <div class="gallery__cover-shell">
+            <img class="gallery__cover" alt="" />
+            <div class="gallery__cover-placeholder hidden">Sin fotos todavía</div>
+          </div>
+          <div class="gallery__copy">
+            <p class="eyebrow">Galería NFC</p>
+            <h2 class="gallery__title"></h2>
+            <div class="gallery__description-row">
+              <p class="gallery__description"></p>
+              <div class="gallery__meta-actions">
+                <button class="gallery__edit-button" type="button" aria-label="Editar descripcion">
+                  Editar
+                </button>
+                <button class="gallery__delete-trip" type="button" aria-label="Eliminar viaje">
+                  Eliminar
+                </button>
+              </div>
+            </div>
+            <div class="gallery__info">
+              <span class="gallery__count"></span>
+              <code class="gallery__route"></code>
+            </div>
+            <div class="gallery__actions">
+              <button class="secondary-button gallery__copy-button" type="button">
+                Obtener enlace NFC
+              </button>
+              <label class="secondary-button">
+                Añadir fotos
+                <input
+                  class="gallery__file-input"
+                  type="file"
+                  accept="image/*,.heic,.heif,image/heic,image/heif"
+                  multiple
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="gallery__grid"></div>
+        <div class="gallery__empty hidden">
+          Este viaje está creado pero todavía no tiene imágenes.
+        </div>
+      </section>
+    </template>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
