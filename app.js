@@ -304,10 +304,9 @@ function renderTripView(trip) {
   }
 
   title.textContent = trip.name;
-  description.textContent =
-    trip.description || "Tu galeria esta lista para abrirse desde cualquier telefono.";
-  count.textContent = describeImageCount(trip.images.length);
-  route.textContent = `#trip/${trip.slug}`;
+  description.textContent = trip.description || "";
+  count.textContent = "";
+  route.textContent = "";
 
   copyButton.addEventListener("click", async () => {
     const url = `${location.origin}${location.pathname}#trip/${trip.slug}`;
